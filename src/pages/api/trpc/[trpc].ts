@@ -13,4 +13,7 @@ export type Context = Awaited<ReturnType<typeof createContext>>;
 export default trpcNext.createNextApiHandler({
   router: appRouter,
   createContext,
+  onError: (opts) => {
+    console.error('onError handler', opts.error)
+  }
 });

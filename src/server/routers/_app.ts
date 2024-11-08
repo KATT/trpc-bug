@@ -4,30 +4,30 @@ import { on, EventEmitter } from "events";
 
 export const events = new EventEmitter();
 
+let idx = 0;
+
+const procWithErrorHandler = procedure.use(async opts => {
+  const res = await opts.next()
+
+  
+
+  return res;
+})
 export const appRouter = router({
-  eventBased: procedure.subscription(async function* ({ signal }) {
-    try {
-      // listen for new events
-      for await (const [data] of on(events, "add", {
-        // Passing the AbortSignal from the request automatically cancels the event emitter when the request is aborted
-        signal,
-      })) {
-        yield { data };
-      }
-    } catch (error) {
-      console.error("eventBased:", error);
-    }
-  }),
   loopBased: procedure.subscription(async function* ({ signal }) {
+    let id = idx++
+
+    let count = 0;
     try {
       while (!signal?.aborted) {
-        console.log("loop", signal, signal?.aborted);
+        console.log("loop", id, signal);
 
-        yield "new data";
+        yield `new data (count: ${count}, sub id: ${id})`;
         await new Promise((r) => setTimeout(r, 1000));
       }
+      console.log('✅ done', id)
     } catch (error) {
-      console.error("done", error);
+      console.error("error", idx, error);
     }
   }),
 });
