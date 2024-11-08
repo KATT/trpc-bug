@@ -6,13 +6,6 @@ export const events = new EventEmitter();
 
 let idx = 0;
 
-const procWithErrorHandler = procedure.use(async opts => {
-  const res = await opts.next()
-
-  
-
-  return res;
-})
 export const appRouter = router({
   loopBased: procedure.subscription(async function* ({ signal }) {
     let id = idx++
