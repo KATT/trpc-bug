@@ -44,6 +44,13 @@ const handler: next.NextApiHandler = (req, res) => {
   res.on('finish', () => {
     console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ res finish')
   })
+  res.on('error', () => {
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ res error')
+  })
+
+  req.on('error', () => {
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ req error')
+  })
   console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ request start')
   return trpcHandler(req,res)
 }
