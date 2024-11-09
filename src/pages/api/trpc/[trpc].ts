@@ -21,23 +21,30 @@ const trpcHandler = trpcNext.createNextApiHandler({
 const handler: next.NextApiHandler = (req, res) => {
 
   req.once('close', () => {
-    console.log('req');
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ req');
   });
   req.socket.on('close', () => {
-    console.log('socket close');
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ socket close');
   });
   req.socket.on('end', () => {
-    console.log('socket end');
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ socket end');
   });
   req.socket.on('error', (err) => {
     console.error('socket error', err);
   });
   req.socket.on('timeout', () => {
-    console.log('socket timeout');
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ socket timeout');
   });
   req.once('aborted', () => {
-    console.log('req aborted');
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ req aborted');
   });
+  res.on('close', () => {
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ res closed')
+  })
+  res.on('finish', () => {
+    console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ res finish')
+  })
+  console.log('ℹ️ℹ️ℹ️ℹ️ℹ️ request start')
   return trpcHandler(req,res)
 }
 
